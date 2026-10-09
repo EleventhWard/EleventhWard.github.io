@@ -92,22 +92,22 @@ footer{border-top:2px solid var(--rule);padding:20px 0 48px;color:var(--mute)}
 </head>
 <body>
 <header><div class="wrap"><b>Eleventh Ward Design</b>
-<nav aria-label="Sections"><a href="#work">Work</a><a href="#tester">Type tester</a><a href="#scale">Scale</a><a href="#poster">Poster lab</a><a href="#approach">Approach</a></nav>
+<nav aria-label="Sections"><a href="#work">Work</a><a href="#tester">Type tester</a><a href="#scale">Scale</a><a href="#poster">Make your own!</a><a href="#approach">Approach</a></nav>
 <div class="tools"><button id="gb" aria-pressed="false" title="Toggle grid (G)">Grid</button><button id="th" title="Toggle theme (T)">Theme</button></div></div><div id="bar"></div></header>
 <div id="ov" aria-hidden="true"><div class="wrap grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
 
 <main class="wrap">
 <div class="hero"><div class="grid"><h1 id="hero">Eleventh Ward</h1>
-<p class="lede">A design studio and type foundry. Graphic design, typography and web design, built on a grid.</p></div></div>
+<p class="lede">A Swiss-inspired studio founded in North Scotland</p></div></div>
 <div class="mq" aria-hidden="true"><div class="mt" id="mt"></div></div>
 
 <section id="work"><div class="grid"><h2>Work</h2><div class="body">
 <div class="seg" role="group" aria-label="Filter work" id="flt"><button aria-pressed="true" data-f="">All</button><button aria-pressed="false" data-f="Graphic design">Graphic design</button><button aria-pressed="false" data-f="Typography">Typography</button></div>
 <div class="work"><ul class="list" id="list"></ul><div class="pv" data-pal="paper" id="pv" aria-hidden="true"></div></div>
-<p class="note">Hover a project to see it.</p>
+<p class="note">Hover over a project to see it.</p>
 </div></div></section>
 
-<section id="tester"><div class="grid"><h2>Type tester</h2><div class="body">
+<section id="tester"><div class="grid"><h2>Type Tester</h2><div class="body">
 <textarea id="t" rows="1" aria-label="Type tester text" spellcheck="false"></textarea>
 <div class="ctl">
 <div class="seg" id="pre" role="group" aria-label="Sample text"><button data-x="Order is a form of respect.">Headline</button><button data-x="Sphinx of black quartz, judge my vow.">Pangram</button><button data-x="A grid is not a cage. It is the quiet agreement that lets everything else on the page speak clearly. Set the type, then leave the space alone.">Paragraph</button></div>
@@ -117,7 +117,7 @@ footer{border-top:2px solid var(--rule);padding:20px 0 48px;color:var(--mute)}
 <div class="seg" id="al" role="group" aria-label="Alignment"><button data-a="left" aria-pressed="true">Left</button><button data-a="center" aria-pressed="false">Centre</button><button data-a="right" aria-pressed="false">Right</button></div>
 <div class="seg" id="cs" role="group" aria-label="Case"><button data-c="none" aria-pressed="true">Aa</button><button data-c="uppercase" aria-pressed="false">AA</button><button data-c="lowercase" aria-pressed="false">aa</button></div>
 </div>
-<p class="note">Set in BER11N. Click a glyph to add it at the cursor.</p>
+<p class="note">BER11N Font, click a glyph to add it to the tester.</p>
 <div class="glyphs" id="gl"></div>
 </div></div></section>
 
@@ -135,9 +135,9 @@ footer{border-top:2px solid var(--rule);padding:20px 0 48px;color:var(--mute)}
 </div></div></div></section>
 
 <section id="approach"><div class="grid"><h2>Approach</h2><div class="body"><dl>
-<dt>Grid first</dt><dd>Every layout starts as a column structure. Alignment does the decorating. Press G to see this page's own grid.</dd>
-<dt>Type carries it</dt><dd>One family, a few weights, a clear scale. Hierarchy comes from size and space.</dd>
-<dt>Say less</dt><dd>White space and short copy. If a thing does not help, it goes.</dd>
+<dt>Grid obsessed.</dt><dd>Every layout starts as a column structure. Press G to see this page's own grid.</dd>
+<dt>Type carries it</dt><dd>One family & a few weights does the heavy lifting.</dd>
+<dt>Say less</dt><dd>White space and short copy. I am no longer afraid of negative space.</dd>
 </dl></div></div></section>
 </main>
 <footer><div class="wrap">Eleventh Ward Design. Contact details to be added. Keys: G grid, T theme, Space shuffle.</div></footer>
@@ -191,7 +191,7 @@ renderWork('');
 
 /* tester */
 var t=$('#t'),S={s:88,w:700,k:-3,l:105};
-t.value=st.get('ew-text')||'Order is a form of respect.';
+t.value=st.get('ew-text')||ELEVEN(TH)';
 function fit(){t.style.height='auto';t.style.height=t.scrollHeight+'px'}
 function apply(){t.style.fontSize=S.s+'px';t.style.letterSpacing=(S.k/100)+'em';t.style.lineHeight=S.l/100;
 $('#sv').textContent=S.s+'px';$('#kv').textContent=(S.k/100).toFixed(2)+'em';$('#lv').textContent=(S.l/100).toFixed(2);fit()}
