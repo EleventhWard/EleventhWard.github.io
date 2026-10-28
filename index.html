@@ -1,752 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Eleventh Ward</title>
-    <meta
-      name="description"
-      content="Eleventh Ward is a design studio and type foundry founded in the North of Scotland."
-    />
-    <style>
-      :root {
-        --paper: #e8e5df;
-        --ink: #121212;
-        --muted: #5f5d59;
-        --rule: rgba(18, 18, 18, 0.2);
-        --panel: #d8d3cd;
-        --accent: #0b2cff;
-        --accent-soft: rgba(11, 44, 255, 0.12);
-        --shadow: rgba(18, 18, 18, 0.12);
-        --max: 1460px;
-      }
-
-      * { box-sizing: border-box; }
-
-      html {
-        scroll-behavior: smooth;
-        background: #0c0c0c;
-      }
-
-      body {
-        margin: 0;
-        background: #0c0c0c;
-        color: var(--ink);
-        font-family: Inter, "Segoe UI", Arial, sans-serif;
-      }
-
-      img { max-width: 100%; display: block; }
-
-      a { color: inherit; }
-
-      .page {
-        max-width: var(--max);
-        margin: 14px auto;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        min-height: calc(100vh - 28px);
-      }
-
-      .topbar {
-        display: grid;
-        grid-template-columns: 1.1fr 1.4fr auto;
-        align-items: center;
-        min-height: 56px;
-        gap: 20px;
-        padding: 0 26px;
-        border-bottom: 1px solid var(--rule);
-        position: sticky;
-        top: 0;
-        background: rgba(232, 229, 223, 0.96);
-        backdrop-filter: blur(10px);
-        z-index: 10;
-      }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-        font-size: 15px;
-        letter-spacing: -0.04em;
-        font-weight: 700;
-      }
-
-      .brand-mark {
-        width: 16px;
-        height: 16px;
-        display: inline-block;
-        position: relative;
-        border: 1px solid var(--ink);
-        transform: rotate(45deg);
-      }
-
-      .brand-mark::before {
-        content: "";
-        position: absolute;
-        inset: 3px;
-        border: 1px solid var(--ink);
-        background: var(--ink);
-      }
-
-      .nav {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: clamp(16px, 2vw, 30px);
-        flex-wrap: wrap;
-      }
-
-      .nav a {
-        color: var(--muted);
-        text-decoration: none;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        font-size: 10px;
-        font-weight: 600;
-        padding-top: 2px;
-        border-bottom: 1px solid transparent;
-      }
-
-      .nav a:hover,
-      .nav a:focus-visible {
-        color: var(--ink);
-        border-color: var(--ink);
-      }
-
-      .status {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        justify-self: end;
-        color: var(--muted);
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-      }
-
-      .status-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--accent);
-        box-shadow: 0 0 0 3px rgba(11, 44, 255, 0.12);
-      }
-
-      .shell {
-        padding: 0 26px;
-      }
-
-      .hero {
-        display: grid;
-        grid-template-columns: 1.2fr 1.6fr;
-        gap: 28px;
-        min-height: 680px;
-        padding-top: 28px;
-        border-bottom: 1px solid var(--rule);
-      }
-
-      .eyebrow {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        padding-top: 16px;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--muted);
-      }
-
-      .eyebrow .code {
-        font-family: "SFMono-Regular", Consolas, monospace;
-      }
-
-      .hero-copy {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 100%;
-      }
-
-      .kicker {
-        margin: 0;
-        font-size: 11px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .display {
-        margin: 0;
-        font-size: clamp(72px, 8vw, 210px);
-        line-height: 0.82;
-        letter-spacing: -0.075em;
-        font-weight: 800;
-        text-transform: uppercase;
-      }
-
-      .display span {
-        display: block;
-      }
-
-      .subline {
-        max-width: 26ch;
-        margin: 0;
-        font-size: clamp(16px, 1.5vw, 28px);
-        line-height: 1.18;
-        letter-spacing: -0.04em;
-        color: var(--ink);
-      }
-
-      .hero-meta {
-        border-left: 1px solid var(--rule);
-        padding-left: 28px;
-        display: grid;
-        align-content: space-between;
-        min-height: 100%;
-      }
-
-      .meta-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px 28px;
-        margin-top: 12px;
-      }
-
-      .meta-block {
-        border-top: 1px solid var(--rule);
-        padding-top: 14px;
-      }
-
-      .meta-label {
-        display: block;
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--muted);
-        margin-bottom: 12px;
-      }
-
-      .meta-value {
-        font-size: clamp(18px, 2vw, 42px);
-        line-height: 0.96;
-        letter-spacing: -0.07em;
-        font-weight: 700;
-      }
-
-      .meta-value.small {
-        font-size: clamp(16px, 1.4vw, 22px);
-        letter-spacing: -0.05em;
-      }
-
-      .runway {
-        border-top: 1px solid var(--rule);
-        border-bottom: 1px solid var(--rule);
-        overflow: hidden;
-        white-space: nowrap;
-        margin-top: 18px;
-        background: rgba(18, 18, 18, 0.02);
-      }
-
-      .runway-track {
-        display: inline-block;
-        padding: 10px 0;
-        min-width: 100%;
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        color: var(--muted);
-        animation: scroll 28s linear infinite;
-      }
-
-      @keyframes scroll {
-        from { transform: translateX(0); }
-        to { transform: translateX(-50%); }
-      }
-
-      .half {
-        display: grid;
-        grid-template-columns: 1fr 2.2fr;
-        gap: 28px;
-        padding: 28px 0 0;
-      }
-
-      .sidebar {
-        padding-right: 28px;
-        border-right: 1px solid var(--rule);
-      }
-
-      .section-index {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--muted);
-        display: block;
-        margin-bottom: 20px;
-      }
-
-      .list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-
-      .list li {
-        border-top: 1px solid var(--rule);
-        padding: 16px 0;
-      }
-
-      .list li:last-child {
-        border-bottom: 1px solid var(--rule);
-      }
-
-      .project {
-        display: grid;
-        grid-template-columns: 54px minmax(0, 1fr) auto;
-        align-items: baseline;
-        gap: 12px;
-        text-decoration: none;
-      }
-
-      .project-index {
-        font-size: 10px;
-        color: var(--muted);
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-      }
-
-      .project-name {
-        font-size: clamp(26px, 4vw, 70px);
-        font-weight: 800;
-        letter-spacing: -0.07em;
-        line-height: 0.9;
-      }
-
-      .project-tag {
-        font-size: 11px;
-        color: var(--muted);
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .main {
-        display: grid;
-        gap: 28px;
-      }
-
-      .panel {
-        border: 1px solid var(--rule);
-        background: rgba(18, 18, 18, 0.015);
-        padding: 24px;
-      }
-
-      .panel-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 18px;
-      }
-
-      .panel-title {
-        margin: 0;
-        font-size: 13px;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        color: var(--muted);
-      }
-
-      .panel-summary {
-        margin: 0;
-        font-size: clamp(28px, 3vw, 58px);
-        line-height: 0.96;
-        letter-spacing: -0.07em;
-        font-weight: 800;
-      }
-
-      .info-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-        margin-top: 26px;
-      }
-
-      .info-card {
-        border-top: 1px solid var(--rule);
-        padding-top: 18px;
-      }
-
-      .mini-label {
-        display: block;
-        margin-bottom: 12px;
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--muted);
-      }
-
-      .info-card p {
-        margin: 0;
-        font-size: 17px;
-        line-height: 1.4;
-        letter-spacing: -0.03em;
-      }
-
-      .two-col {
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 28px;
-        padding-top: 28px;
-        border-top: 1px solid var(--rule);
-      }
-
-      .type-sample {
-        margin: 0;
-        font-size: clamp(80px, 11vw, 220px);
-        line-height: 0.8;
-        letter-spacing: -0.08em;
-        font-weight: 800;
-        overflow-wrap: anywhere;
-      }
-
-      .stack {
-        display: grid;
-        gap: 18px;
-      }
-
-      .stat-row {
-        display: grid;
-        grid-template-columns: 100px 1fr;
-        gap: 14px;
-        padding-top: 14px;
-        border-top: 1px solid var(--rule);
-      }
-
-      .stat-row .label {
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--muted);
-      }
-
-      .stat-row .value {
-        font-size: clamp(18px, 2vw, 28px);
-        line-height: 1.1;
-        letter-spacing: -0.04em;
-        font-weight: 700;
-      }
-
-      .footer {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-        padding: 28px 0 34px;
-        border-top: 1px solid var(--rule);
-        margin-top: 28px;
-      }
-
-      .footer-card {
-        min-height: 140px;
-        border: 1px solid var(--rule);
-        background: rgba(18, 18, 18, 0.015);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 18px 18px 14px;
-      }
-
-      .footer-card small {
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--muted);
-      }
-
-      .footer-card span,
-      .footer-card a {
-        font-size: clamp(18px, 2vw, 34px);
-        line-height: 1;
-        letter-spacing: -0.06em;
-        font-weight: 700;
-        text-decoration: none;
-      }
-
-      @media (max-width: 980px) {
-        .topbar {
-          grid-template-columns: 1fr;
-          justify-items: start;
-          padding-top: 10px;
-          padding-bottom: 10px;
-        }
-
-        .nav {
-          justify-content: flex-start;
-        }
-
-        .status {
-          justify-self: start;
-        }
-
-        .hero,
-        .half,
-        .two-col,
-        .footer {
-          grid-template-columns: 1fr;
-        }
-
-        .sidebar {
-          border-right: 0;
-          padding-right: 0;
-        }
-
-        .hero-meta {
-          border-left: 0;
-          padding-left: 0;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .page { margin: 0; min-height: 100vh; }
-        .shell,
-        .topbar { padding-left: 16px; padding-right: 16px; }
-        .display { font-size: clamp(52px, 25vw, 120px); }
-        .meta-grid,
-        .info-grid,
-        .footer { grid-template-columns: 1fr; }
-        .project {
-          grid-template-columns: 38px minmax(0, 1fr) auto;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="page">
-      <header class="topbar" aria-label="Main header">
-        <a class="brand" href="#top" aria-label="Eleventh Ward home">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <span>Eleventh Ward</span>
-        </a>
-
-        <nav class="nav" aria-label="Main navigation">
-          <a href="#work">Work</a>
-          <a href="#type">Type</a>
-          <a href="#specimen">Specimen</a>
-          <a href="#approach">Approach</a>
-          <a href="#contact">Contact</a>
-        </nav>
-
-        <div class="status" aria-label="Status">
-          <span class="status-dot" aria-hidden="true"></span>
-          <span>North of Scotland</span>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Eleventh Ward Design</title>
+  <meta name="description" content="Eleventh Ward is a design studio and type foundry founded in the North of Scotland. Graphic design, typography and web design." />
+  <link rel="canonical" href="https://eleventhward.github.io/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Eleventh Ward Design" />
+  <meta property="og:title" content="Eleventh Ward Design" />
+  <meta property="og:description" content="A design studio and type foundry founded in the North of Scotland." />
+  <meta property="og:url" content="https://eleventhward.github.io/" />
+  <meta property="og:image" content="https://eleventhward.github.io/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Eleventh Ward wordmark and HW logo in white on black" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Eleventh Ward Design" />
+  <meta name="twitter:description" content="A design studio and type foundry founded in the North of Scotland." />
+  <meta name="twitter:image" content="https://eleventhward.github.io/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFsElEQVR42sWXQWhT6RbHf9/3JW3SpqZJLFq0ScFqBTdFEbsRLWM7RVqzrZtBxAcuKuLbiIrO" />
+  <link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAANYklEQVR42u2bfWxU1brGf2vvPR+dlpnZLYW2wQ4oKFK1CGj4kC/FI9DQC4LciChEI0quMZh4" />
+  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAhX0lEQVR42u2de3BU5f3/37vn7C17STb3C4EQFAEhguKFVgsUrGAIRgetKNWhopbS6uh4bXFKW0ehom0p1Bm0MtpRimD" />
+  <style>
+    @font-face{font-family:'BER11N';src:url(data:font/woff2;base64,d09GMgABAAAAADCMABIAAAAAcnQAADAnAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cGiAbtFocMAZgAIUsCDQJnAwRCArnWNxnC4NAAAE2AiQDhnoEIAWMbAeJBQyBJ);}
+    @font-face{font-family:'BER11N';src:url(data:font/woff2;base64,d09GMgABAAAAAC+4ABIAAAAAcxQAAC9UAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cGiAbtHIcMAZgAIUsCDQJnAwRCArqdOAqATYCJAOGeguDQAAEIAWKWAeJBQyBJ);}
+    @font-face{font-family:'Sustain';src:url(data:font/woff2;base64,d09GMgABAAAAAWYYAA8AAAAIUzgAAWW1AAEAQQAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cGiAbMByDliwGYACzOBEICpnieJSULgE2AiQDzA4LzUwABCAFnV8Hgr1TWx/E);}
+    @font-face{font-family:'NHG Display';src:url(data:font/woff2;base64,d09GMgABAAAAAGOIAA8AAAABaiQAAGMnAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cGh4b8QAcrEQGYACIMhEICoPsBILedwuHTgABNgIkA48YBCAFjGMHmj1b);}
+
+    :root{--frame:#0a0a0a;--sheet:#d9d9d4;--fg:#111;--mute:#5c5c58;--rule:rgba(17,17,17,.28);--accent:#0000ff;--r:12px;--pad:clamp(16px,2.4vw,28px);--d:'NHG Display','Neue Haas Grotesk Display','Helvetica Neue',Arial,sans-serif;--mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;--tf:'BER11N','Helvetica Neue',Helvetica,Arial,sans-serif;}
+    :root[data-theme="dark"]{--sheet:#151515;--fg:#f2f2f2;--mute:#8e8e8a;--rule:rgba(242,242,242,.26);--accent:#5c6bff}
+    html{scroll-padding-top:80px;scroll-behavior:smooth;font-synthesis:none}
+    *{box-sizing:border-box}
+    body{margin:0;padding:12px;background:var(--frame);font:400 16px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif}
+    .sheet{max-width:1680px;margin:0 auto;background:var(--sheet);color:var(--fg);border-radius:16px}
+    button,input,textarea{font:inherit;color:inherit}
+    :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .in{padding:0 var(--pad)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px}
+    header{position:sticky;top:0;z-index:5;background:var(--sheet);border-radius:16px 16px 0 0;padding-top:env(safe-area-inset-top,0px)}
+    .hd{display:flex;align-items:center;justify-content:space-between;gap:20px;height:56px}
+    .brand{display:flex;align-items:center;gap:10px;font:700 16px/1 var(--d);letter-spacing:-.02em;color:inherit;text-decoration:none;white-space:nowrap}
+    .brand sup{font-size:9px;margin:-8px 0 0 -6px}
+    nav{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;min-width:0}
+    nav a{color:var(--mute);text-decoration:none;white-space:nowrap;font-size:14px;padding:4px 0;border-bottom:1px solid transparent}
+    nav a:hover{color:var(--fg)}nav a[aria-current="true"]{color:var(--fg);border-color:var(--accent)}
+    .tools{display:flex;gap:8px;align-items:center}
+    .clk{font:12px var(--mono);color:var(--mute);margin-right:6px;font-variant-numeric:tabular-nums}
+    .tools button,.pill,.seg button{background:none;border:1px solid var(--rule);padding:5px 12px;cursor:pointer;font-size:13px}
+    .tools button,.pill{border-radius:999px}
+    .tools button[aria-pressed="true"]{background:var(--fg);color:var(--sheet)}
+    .seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+    .seg button{border:0;border-radius:0}.seg button+button{border-left:1px solid var(--rule)}
+    .seg button[aria-pressed="true"]{background:var(--fg);color:var(--sheet)}
+    .seg button:focus-visible{outline-offset:-3px}
+    .hero{min-height:calc(100svh - 80px);display:flex;flex-direction:column;justify-content:space-between;gap:48px;padding:clamp(24px,5vw,56px) 0 20px}
+    .ix{grid-column:1/13;font:12px var(--mono);color:var(--mute)}
+    .lede{grid-column:1/13;margin:16px 0 0;font-family:'Sustain',ui-monospace,Menlo,Consolas,monospace;font-weight:400;font-size:clamp(22px,3vw,46px);line-height:1.18;letter-spacing:0;padding-left:1.6em}
+    @media(min-width:800px){.ix{grid-column:1/5}.lede{grid-column:5/13;margin:0;padding-left:0}}
+    h1{margin:0;font-family:var(--d);font-weight:700;font-size:calc((min(100vw - 24px,1680px) - 2*var(--pad))/6.3);line-height:.9;letter-spacing:-.045em;white-space:nowrap}
+    .ch{display:inline-block;transform:translateY(calc((var(--p,0) + var(--w,0)*.5)*-.06em));color:color-mix(in srgb,var(--accent) calc(max(var(--p,0),var(--w,0))*100%),var(--fg));animation:up .9s cubic-bezier(.22,1,.36,1) both}
+    @keyframes up{from{transform:translateY(40%);opacity:0}}
+    .dot{display:inline-block;width:.16em;height:.16em;background:var(--accent);border-radius:50%;margin-left:.04em}
+    .wd{white-space:nowrap}
+    .mq{margin:0 calc(var(--pad)*-1);border-block:1px solid var(--rule);overflow:hidden;padding:10px 0;font:11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+    .mt{display:flex;width:max-content;white-space:nowrap;will-change:transform}
+    .mt span{padding:0 .8em}.mt i{font-style:normal;color:var(--accent)}
+    section{position:relative;border-top:1px solid var(--rule);padding:20px 0 120px}
+    #work{border-top:0;padding-top:48px}
+    #work::before{content:"";position:absolute;left:calc(var(--pad)*-1);top:0;bottom:0;width:9px;background:repeating-linear-gradient(to bottom,var(--fg) 0 1px,transparent 1px 64px);opacity:.6}
+    .meta{grid-column:1/13;display:flex;gap:14px;font:12px/1.2 var(--mono);color:var(--mute);margin-bottom:32px}
+    .body{grid-column:1/13;min-width:0}
+    @media(min-width:800px){.meta{grid-column:1/4;margin:0}.body{grid-column:4/13}}
+    .work{margin-top:24px}
+    .list{list-style:none;margin:0;padding:0}
+    .row{display:grid;grid-template-columns:44px 1fr auto;align-items:baseline;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--rule);padding:14px 0;cursor:pointer}
+    .list li:last-child .row{border-bottom:1px solid var(--rule)}
+    .row em{font:12px var(--mono);font-style:normal;color:var(--mute)}
+    .row strong{font:700 clamp(28px,4.6vw,68px)/1 var(--d);letter-spacing:-.04em;word-spacing:.08em;transition:transform .25s,color .25s}
+    .row span{font-size:13px;color:var(--mute);white-space:nowrap}
+    .row:hover strong,.row:focus-visible strong,.row[aria-current="true"] strong{transform:translateX(14px);color:var(--accent)}
+    .pv{position:fixed;left:0;top:0;pointer-events:none;z-index:8;opacity:0;transition:opacity .2s;display:none;will-change:transform;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+    .pv.on{opacity:1}.pv img{display:block;max-width:300px;max-height:340px;width:auto;height:auto;border-radius:14px}
+    .th{display:none;width:100%;max-height:420px;object-fit:contain;object-position:left;margin:0 0 20px;border-radius:14px}
+    @media not all and (hover:hover) and (min-width:900px){.th{display:block}}
+    @media(hover:hover) and (min-width:900px){.pv{display:block}}
+    .note{color:var(--mute);font-size:13px;margin:16px 0 0}
+    .ctl{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;margin-top:24px}
+    .ctl label{display:flex;gap:10px;align-items:center;color:var(--mute);font-size:13px}
+    .ctl output{min-width:4.5ch;color:var(--fg)}
+    input[type=range]{accent-color:var(--accent);width:120px}
+    #t{width:100%;background:none;border:0;border-bottom:1px solid var(--rule);padding:0 0 16px;resize:none;overflow:hidden;font-family:var(--tf,'BER11N','Helvetica Neue',Helvetica,Arial,sans-serif);font-size:clamp(48px,7vw,120px);line-height:.9;letter-spacing:-.05em;font-weight:700;min-height:80px}
+    .glyphs{display:flex;flex-wrap:wrap;margin-top:32px;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+    .glyphs button{width:calc(100%/12);min-width:34px;aspect-ratio:1;background:none;border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);font:700 20px var(--tf,'BER11N','Helvetica Neue',Helvetica,Arial,sans-serif);cursor:pointer}
+    .glyphs button:hover{background:var(--accent);color:#fff}
+    .ap,.ct{display:grid;gap:40px 24px;grid-template-columns:1fr}
+    @media(min-width:800px){.ap,.ct{grid-template-columns:repeat(3,1fr)}}
+    .ap h3{margin:0 0 12px;font:700 22px/1.05 var(--d);letter-spacing:-.03em}
+    .ap p{margin:0;font-size:14px;line-height:1.3;color:color-mix(in srgb,var(--fg) 78%,transparent)}
+    .ct small{display:block;font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+    .ct a{display:block;width:fit-content;color:inherit;font-size:17px;text-underline-offset:3px;margin-top:4px}
+    .ct a:hover{color:var(--accent)}.ct .pill{margin-top:14px}
+    footer{border-top:1px solid var(--rule);padding:var(--pad)}
+    .fi{display:block;width:100%;background:var(--fg);-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
+    .fm{display:none}
+    @media(max-width:799px){.fd{display:none}.fm{display:block}}
+    @media(max-width:700px){.hd{flex-wrap:wrap;height:auto;padding-block:10px;row-gap:8px}nav{order:3;width:100%}.clk{display:none}}
+    .sp{display:grid;gap:40px;grid-template-columns:1fr}
+    @media(min-width:800px){.sp{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:end}}
+    .big{font:var(--sw,700) clamp(140px,20vw,300px)/.85 var(--sf,'BER11N','Helvetica Neue',Helvetica,Arial,sans-serif);font-synthesis:none;letter-spacing:-.04em;min-height:.85em;overflow:hidden;white-space:nowrap}
+    .sp h3{margin:0 0 12px;font:700 22px/1.05 var(--d);letter-spacing:-.03em}
+    .sp p{margin:0 0 20px;font-size:14px;line-height:1.3;max-width:38ch;color:color-mix(in srgb,var(--fg) 78%,transparent)}
+    a.pill{display:inline-block;color:inherit;text-decoration:none}
+    .cg{margin-top:56px;display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+    .cg button{height:56px;background:var(--sheet);border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);cursor:pointer;font:var(--sw,700) 26px var(--sf,'BER11N','Helvetica Neue',Helvetica,Arial,sans-serif)}
+    .cg button:hover,.cg button:focus-visible{background:var(--accent);color:#fff;outline-offset:-3px}
+    .lad{margin-top:56px;border-top:1px solid var(--rule)}
+    .lad div{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:baseline;border-bottom:1px solid var(--rule);padding:12px 0;overflow:hidden}
+    .lad small{font:11px var(--mono);color:var(--mute)}
+    .lad span{font-family:var(--sf,'BER11N','Helvetica Neue',Helvetica,Arial,sans-serif);font-weight:var(--sw,700);font-synthesis:none;letter-spacing:-.02em;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    body.so{overflow:hidden}.so .pv{display:none!important}
+    #pj{position:fixed;inset:12px;z-index:20;display:grid;grid-template-columns:minmax(0,1fr);background:var(--sheet);color:var(--fg);border-radius:16px;overflow:auto;opacity:0;visibility:hidden;transform:translateY(20px);transition:opacity .2s,visibility .2s,transform .2s}
+    #pj.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+    .pj-img{display:flex;align-items:center;justify-content:center;padding:var(--pad);min-height:55svh;background:color-mix(in srgb,var(--fg) 6%,var(--sheet))}
+    #pji{display:block;max-width:100%;max-height:calc(100svh - 24px - 2*var(--pad));width:auto;height:auto;border-radius:12px;transition:opacity .3s}
+    .pj-info{display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:var(--pad)}
+    .pj-top{display:flex;justify-content:space-between;align-items:center;font:12px var(--mono);color:var(--mute)}
+    #pjt{margin:0 0 16px;font:700 clamp(32px,4vw,64px)/1 var(--d);letter-spacing:-.04em;word-spacing:.08em}
+    #pjn{margin:0 0 28px;font-size:15px;line-height:1.35;max-width:34ch}
+    #pjm{margin:0;display:grid;grid-template-columns:auto 1fr;gap:0;font-size:13px}
+    #pjm dt,#pjm dd{margin:0;padding:10px 0;border-top:1px solid var(--rule)}
+    #pjm dt{font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);padding:12px 24px 10px 0}
+    #pjm a{color:inherit;text-underline-offset:3px}
+    .pj-nav{display:flex;gap:8px}
+    @media(min-width:900px){#pj{grid-template-columns:minmax(0,1.7fr) minmax(320px,1fr);overflow:hidden}.pj-img{min-height:0}.pj-info{overflow:auto}}
+    .tools button#lg{height:30px;padding:0 10px;display:flex;align-items:center;justify-content:center;min-width:46px}
+    #lg img{display:block;height:14px;width:auto;border-radius:2px}
+    .cmp{margin-top:56px}
+    .cmp-stage{position:relative;overflow:hidden;border:1px solid var(--rule);border-radius:var(--r);cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none;background:var(--sheet)}
+    .cmp-l,.cmp-r{font-family:var(--sf,'BER11N','Helvetica Neue',Helvetica,Arial,sans-serif);font-synthesis:none;font-size:var(--fs,clamp(36px,8.4vw,130px));line-height:1.1;letter-spacing:-.03em;padding:18px 20px}
+    .cmp-r{position:absolute;inset:0;clip-path:inset(0 0 0 var(--cx,50%));background:color-mix(in srgb,var(--fg) 6%,var(--sheet))}
+    .cmp-h{position:absolute;top:0;bottom:0;left:var(--cx,50%);width:0;pointer-events:none}
+    .cmp-h::before{content:"";position:absolute;top:0;bottom:0;left:-.5px;width:1px;background:var(--fg)}
+    .cmp-h span{position:absolute;top:50%;left:0;transform:translate(-50%,-50%);padding:6px 10px;border-radius:999px;background:var(--fg);color:var(--sheet);font:12px var(--mono);white-space:nowrap}
+    .cmp-t{position:absolute;top:12px;font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);pointer-events:none}
+    .cmp-tl{left:14px}.cmp-tr{right:14px}
+    .cmp-i{margin-top:16px;width:100%;background:none;border:0;border-bottom:1px solid var(--rule);padding:0 0 10px;font:13px var(--mono)}
+    .tools button#th{position:relative;display:flex;align-items:center;gap:2px;padding:3px}
+    #th::before{content:"";position:absolute;top:3px;left:3px;width:28px;height:22px;border-radius:999px;background:var(--fg);transition:transform .5s cubic-bezier(.65,0,.25,1),background-color .5s}
+    :root[data-theme="dark"] #th::before{transform:translateX(30px)}
+    .tools button#th[aria-pressed="true"]{background:none;color:inherit}
+    .ti{position:relative;z-index:1;display:grid;place-items:center;width:28px;height:22px;border-radius:999px;transition:color .5s}
+    :root:not([data-theme="dark"]) .ti-s,:root[data-theme="dark"] .ti-m{color:var(--sheet)}
+    .tt,.tt *,.tt *::before,.tt *::after{transition:background-color .55s ease,color .55s ease,border-color .55s ease,box-shadow .55s ease,transform .5s cubic-bezier(.65,0,.25,1)!important}
+    @media(prefers-reduced-motion:reduce){.tt,.tt *,.tt *::before,.tt *::after{transition:none!important}*{transition:none!important;animation:none!important;scroll-behavior:auto!important}.ch{transform:none!important}}
+    .lg{display:inline-block;height:1.5em;aspect-ratio:177/120;background:currentColor;-webkit-mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALEAAAB4CAYAAAC9zhO5AAAeUUlEQVR42u1debhdVXX/rXPvy);mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALEAAAB4CAYAAAC9zhO5AAAeUUlEQVR42u1debhdVXX/rXPvy)}
+    .fd{--m:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACgAAAAH0CAQAAABbWbymAADVxUlEQVR42uzdd5wT1frH8U+yhS10AQH5IXZBFFCvvWDvgh07FuztKvbeGyoWLFixYcd2QbGAimLFjmJFlGIBKcsubMvvjyzLZjdlZnJmMjP5vnld7);}
+    .fm{--m:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABJIAAAOECAQAAABQzNOcAACZ7klEQVR42u3daaBM9QPG8e+9lpB0k2RLpBLJUv6iRdqIbCkhRAuRilKkJJVUqFQSpdJiCUkRJWUtUiFRhEhE9uzrPf8Xlu4yy9nnzMzzuS/KzFl/5);}
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <header><div class="in hd"><a class="brand" href="#top"><span class="lg" role="img" aria-label="Eleventh Ward logo"></span>Eleventh Ward<sup>TM</sup></a>
+      <nav aria-label="Main navigation">
+        <a href="#work" aria-current="true">Work</a>
+        <a href="#tester">Type tester</a>
+        <a href="#specimen">Specimen</a>
+        <a href="#approach">Approach</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="tools"><span class="clk" id="clk"></span><button id="th" type="button" title="Light / dark (T)" aria-label="Toggle light and dark theme" aria-pressed="false"><span class="ti ti-s"><svg .../></span><span class="ti ti-m"><svg .../></span></button></div>
+    </div></header>
+    <main class="in" id="top">
+      <div class="hero"><div class="grid"><span class="ix">(00) Design studio and type foundry</span><p class="lede">A design studio founded in the North of Scotland.</p></div><h1 id="hero">Eleventh Ward</h1></div>
+      <div class="mq" aria-hidden="true"><div class="mt" id="mt"></div></div>
+      <section id="work"><div class="grid"><div class="meta"><span>(01)</span><span>Work</span></div><div class="body">
+        <div class="work"><ul class="list" id="list"></ul><div class="pv" id="pv" aria-hidden="true"></div></div>
+        <p class="note">Hover a project to preview it, click to open it.</p>
+      </div></div></section>
+      <section id="tester"><div class="grid"><div class="meta"><span>(02)</span><span>Type tester</span></div><div class="body">
+        <textarea id="t" rows="1" aria-label="Type tester text" spellcheck="false"></textarea>
+        <div class="ctl">
+          <div class="seg" id="pre" role="group" aria-label="Sample text"><button data-x="The triangle is the strongest shape; each side relies on the other.">Headline</button><button data-x="Sphinx of black quartz, judge my vow.">Body</button></div>
+          <label>Size <input id="s" type="range" min="20" max="180" value="64"><output id="sv"></output></label>
+          <label>Tracking <input id="k" type="range" min="-8" max="20" value="-3"><output id="kv"></output></label>
+          <label>Leading <input id="l" type="range" min="80" max="180" value="105"><output id="lv"></output></label>
+          <div class="seg" id="tf" role="group" aria-label="Typeface"><button aria-pressed="true">BER11N</button><button aria-pressed="false">Sustain</button></div>
+          <div class="seg" id="wt" role="group" aria-label="Weight"><button data-w="300" aria-pressed="false">Light</button><button data-w="700" aria-pressed="true">Bold</button></div>
+          <div class="seg" id="al" role="group" aria-label="Alignment"><button data-a="left" aria-pressed="true">Left</button><button data-a="center" aria-pressed="false">Centre</button><button data-a="right" aria-pressed="false">Right</button></div>
+          <div class="seg" id="cs" role="group" aria-label="Case"><button data-c="none" aria-pressed="true">Aa</button><button data-c="uppercase" aria-pressed="false">AA</button><button data-c="lowercase" aria-pressed="false">aa</button></div>
         </div>
-      </header>
-
-      <main class="shell" id="top">
-        <section class="hero" aria-labelledby="hero-title">
-          <div class="hero-copy">
-            <div class="eyebrow">
-              <span class="code">(00)</span>
-              <span>Design studio &amp; type foundry</span>
-            </div>
-
-            <div>
-              <p class="kicker">Founded in the North of Scotland</p>
-              <h1 class="display" id="hero-title">
-                <span>Eleventh</span>
-                <span>Ward</span>
-              </h1>
-            </div>
-
-            <p class="subline">
-              Graphic design, typography, and web direction built with clarity,
-              measured rhythm, and disciplined structure.
-            </p>
-          </div>
-
-          <div class="hero-meta">
-            <div class="meta-grid">
-              <div class="meta-block">
-                <span class="meta-label">Practice</span>
-                <div class="meta-value">Design</div>
-              </div>
-              <div class="meta-block">
-                <span class="meta-label">System</span>
-                <div class="meta-value">Swiss</div>
-              </div>
-              <div class="meta-block">
-                <span class="meta-label">Language</span>
-                <div class="meta-value small">BER11N</div>
-              </div>
-            </div>
-
-            <div class="meta-grid">
-              <div class="meta-block">
-                <span class="meta-label">Location</span>
-                <div class="meta-value small">North Sea</div>
-              </div>
-              <div class="meta-block">
-                <span class="meta-label">Focus</span>
-                <div class="meta-value small">Identity</div>
-              </div>
-              <div class="meta-block">
-                <span class="meta-label">Context</span>
-                <div class="meta-value small">Digital</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div class="runway" aria-hidden="true">
-          <div class="runway-track">
-            Type • Systems • Grid • Information • Structure • Brand • Signal • Type • Systems • Grid • Information • Structure • Brand • Signal •
-          </div>
-        </div>
-
-        <section class="half" id="work" aria-labelledby="work-title">
-          <aside class="sidebar">
-            <span class="section-index">(01) Work</span>
-            <ul class="list" aria-label="Selected work">
-              <li>
-                <a class="project" href="#">
-                  <span class="project-index">01</span>
-                  <span class="project-name">Liminal</span>
-                  <span class="project-tag">Brand</span>
-                </a>
-              </li>
-              <li>
-                <a class="project" href="#">
-                  <span class="project-index">02</span>
-                  <span class="project-name">Northline</span>
-                  <span class="project-tag">Web</span>
-                </a>
-              </li>
-              <li>
-                <a class="project" href="#">
-                  <span class="project-index">03</span>
-                  <span class="project-name">Vessel</span>
-                  <span class="project-tag">Type</span>
-                </a>
-              </li>
-              <li>
-                <a class="project" href="#">
-                  <span class="project-index">04</span>
-                  <span class="project-name">Signal</span>
-                  <span class="project-tag">System</span>
-                </a>
-              </li>
-            </ul>
-          </aside>
-
-          <div class="main">
-            <div class="panel">
-              <div class="panel-head">
-                <h2 class="panel-title">Studio notes</h2>
-                <span class="section-index">2026</span>
-              </div>
-              <p class="panel-summary">
-                A disciplined practice for brands and interfaces that need clarity,
-                precision, and quiet confidence.
-              </p>
-
-              <div class="info-grid">
-                <div class="info-card">
-                  <span class="mini-label">Approach</span>
-                  <p>Research-led, editorial, and built to communicate without excess.</p>
-                </div>
-                <div class="info-card">
-                  <span class="mini-label">Method</span>
-                  <p>Grid, hierarchy, tone, and proportion shaped with intent.</p>
-                </div>
-                <div class="info-card">
-                  <span class="mini-label">Output</span>
-                  <p>Identity systems, websites, typefaces, and art direction.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="two-col" id="type" aria-labelledby="type-title">
-          <div>
-            <span class="section-index">(02) Type</span>
-            <h2 class="type-sample" id="type-title">BER11N</h2>
-          </div>
-
-          <div class="stack">
-            <div class="stat-row">
-              <span class="label">Family</span>
-              <span class="value">Light / Bold</span>
-            </div>
-            <div class="stat-row">
-              <span class="label">Glyphs</span>
-              <span class="value">223 characters</span>
-            </div>
-            <div class="stat-row">
-              <span class="label">System</span>
-              <span class="value">Structured, modular, directional</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="two-col" id="specimen" aria-labelledby="specimen-title">
-          <div>
-            <span class="section-index">(03) Specimen</span>
-            <h2 class="type-sample" id="specimen-title">Aa</h2>
-          </div>
-
-          <div class="stack">
-            <div class="stat-row">
-              <span class="label">Weight</span>
-              <span class="value">Measured, utilitarian, confident</span>
-            </div>
-            <div class="stat-row">
-              <span class="label">Spacing</span>
-              <span class="value">Tight but legible</span>
-            </div>
-            <div class="stat-row">
-              <span class="label">Tone</span>
-              <span class="value">Information first</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="two-col" id="approach" aria-labelledby="approach-title">
-          <div>
-            <span class="section-index">(04) Approach</span>
-            <h2 class="panel-summary" id="approach-title">Grids, grids, grids.</h2>
-          </div>
-
-          <div class="stack">
-            <div class="stat-row">
-              <span class="label">01</span>
-              <span class="value">Structure first</span>
-            </div>
-            <div class="stat-row">
-              <span class="label">02</span>
-              <span class="value">Type with intent</span>
-            </div>
-            <div class="stat-row">
-              <span class="label">03</span>
-              <span class="value">Minimalism as method</span>
-            </div>
-          </div>
-        </section>
-
-        <footer class="footer" id="contact" aria-label="Contact information">
-          <div class="footer-card">
-            <small>Follow</small>
-            <a href="https://instagram.com/zwne000/" target="_blank" rel="noreferrer">Instagram</a>
-          </div>
-          <div class="footer-card">
-            <small>Follow</small>
-            <a href="https://x.com/112YTA/" target="_blank" rel="noreferrer">Twitter</a>
-          </div>
-          <div class="footer-card">
-            <small>Email</small>
-            <a href="mailto:zwne000@proton.me">zwne000@proton.me</a>
-          </div>
-        </footer>
-      </main>
-    </div>
-  </body>
+        <p class="note">Set in BER11N. Click a glyph to add it at the cursor.</p>
+        <div class="glyphs" id="gl"></div>
+      </div></div></section>
+      <section id="specimen"><div class="grid"><div class="meta"><span>(03)</span><span>Specimen</span></div><div class="body">
+        <div class="sp"><div class="big" id="bg" aria-hidden="true">Aa</div><div><h3 id="sn">BER11N</h3><p id="sd"></p><div class="seg" id="sf" role="group" aria-label="Typeface" style="margin:0 12px 12px 0"></div></div></div>
+        <div class="cmp" id="cmp"><div class="cmp-stage" id="cmpS" tabindex="0" role="slider" aria-label="Weight comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><div class="cmp-l" id="cmpL">Aa</div><div class="cmp-r" id="cmpR">Aa</div><div class="cmp-h"><span>50%</span></div></div></div>
+        <div class="cg" id="cg"></div>
+        <div class="lad"><div><small>96 px</small><span style="font-size:96px">The triangle is the strongest shape; each side relies on the other.</span></div><div><small>64 px</small><span style="font-size:64px">The triangle is the strongest shape; each side relies on the other.</span></div></div>
+      </div></div></section>
+      <section id="approach"><div class="grid"><div class="meta"><span>(04)</span><span>Approach</span></div><div class="body ap">
+        <div><h3>Grids, Grids, Grids.</h3><p>Grids are a vital part of Swiss design since they provide structure, balance, and consistency. They assist in aligning text, images, and other elements, which makes the design more coherent and visually balanced.</p></div>
+        <div><h3>BER11N</h3><p>Eleventh Ward’s own typeface, in Light and Bold, with 223 glyphs. Type something in the tester above to see it at work.</p></div>
+        <div><h3>Solace In Minimalism</h3><p>I do more with the little I have.</p></div>
+      </div></div></section>
+      <section id="contact"><div class="grid"><div class="meta"><span>(05)</span><span>Contact</span></div><div class="body ct">
+        <div><small>Follow</small><a href="https://instagram.com/zwne000/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://t.me/EleventhWard" target="_blank" rel="noopener noreferrer">Telegram</a></div>
+        <div><small>Follow</small><a href="https://https://x.com/112YTA/" target="_blank" rel="noopener noreferrer">Twitter</a></div>
+        <div><small>Message</small><a href="https://wa.me/IsThisEvenZane" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://signal.me/#eu/bsNR1JIg2CXLlkXrWiTASFP2qdX-tlEZZwxXPenHQGPI" target="_blank" rel="noopener noreferrer">Signal</a></div>
+        <div><small>Email</small><a href="mailto:zwne000@proton.me">zwne000@proton.me</a><button class="pill" id="cp" type="button">Copy email address</button></div>
+      </div></div></section>
+    </main>
+    <footer><div class="fi fd" role="img" aria-label="Eleventh Ward"></div><div class="fi fm" role="img" aria-label="Eleventh Ward"></div></footer>
+  </div>
+  <div id="pj" role="dialog" aria-modal="true" aria-label="Project" aria-hidden="true"><div class="pj-img"><img id="pji" alt=""></div><div class="pj-info"><div class="pj-top"><span id="pjx"></span><button class="pill" id="pc" type="button">Close</button></div><div><h2 id="pjt"></h2><p id="pjn"></p><dl id="pjm"></dl></div><div class="pj-nav"><button class="pill" id="pp" type="button">Prev</button><button class="pill" id="pn" type="button">Next</button></div></div></div>
+  <script>
+    (function(){
+      var $=function(s,r){return(r||document).querySelector(s)},$$=function(s,r){return[].slice.call((r||document).querySelectorAll(s))};
+      var st={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+      var R=document.documentElement;
+      function dark(){return R.getAttribute('data-theme')==='dark'}
+      var sv=st.get('ew-theme2');if(sv)R.setAttribute('data-theme',sv);$('#th').setAttribute('aria-pressed',sv==='dark');
+      function theme(){var n=dark()?'light':'dark';R.setAttribute('data-theme',n);st.set('ew-theme2',n);$('#th').setAttribute('aria-pressed',n==='dark');}
+      $('#th').onclick=theme;
+      var h=$('#hero'),txt='Eleventh Ward';h.setAttribute('aria-label',txt);
+      var ix=0;h.innerHTML=txt.split(' ').map(function(w,wi,a){return'<span class="wd">'+w.split('').map(function(c){return'<span class="ch" aria-hidden="true" style="--i:'+(ix++)+'">'+c+'</span>'}).join('')+'</span>'}).join(' ');
+      var chs=$$('.ch',h),mx=-1e4,my=-1e4,raf=0;
+      function tick(){raf=0;chs.forEach(function(c){var r=c.getBoundingClientRect(),d=Math.hypot(mx-(r.left+r.width/2),my-(r.top+r.height/2));c.style.setProperty('--p',Math.max(0,1-d/220).toFixed(3))})}
+      addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(tick)});
+      var links=$$('nav a');
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)links.forEach(function(a){a.setAttribute('aria-current',a.getAttribute('href')==='#'+e.target.id)})})},{rootMargin:'0px 0px -40% 0px'});
+      $$('section[id]').forEach(function(s){io.observe(s)});
+      var IM=["data:image/jpeg;base64,..."]; // omitted from this message for brevity
+      var items=[{id:'Liminal',title:'Liminal',desc:'Brand system and visual architecture for an emerging design-led studio.',meta:[['Client','Liminal'],['Type','BER11N'],['Focus','Identity']]},{id:'Northline',title:'Northline',desc:'Editorial web system balancing function, precision, and a distinctly regional voice.',meta:[['Client','Northline'],['Type','Sustain'],['Focus','Web']]},{id:'Vessel',title:'Vessel',desc:'A custom type direction concerned with rhythm, weight, and quiet confidence.',meta:[['Client','Vessel'],['Type','BER11N'],['Focus','Type']]},{id:'Signal',title:'Signal',desc:'Evidence-led communication design for a culture and technology practice.',meta:[['Client','Signal'],['Type','NHG Display'],['Focus','Systems']]}];
+      var pj=$('#pj'),pji=$('#pji'),pjt=$('#pjt'),pjn=$('#pjn'),pjm=$('#pjm'),pjx=$('#pjx');
+      var cur=-1;
+      function openProject(i){cur=i;var it=items[i];pjt.textContent=it.title;pjn.textContent=it.desc;pji.src=IM[i%IM.length];pjx.textContent='Project '+(i+1)+' / '+items.length;var html='';it.meta.forEach(function(m){html+='<dt>'+m[0]+'</dt><dd>'+m[1]+'</dd>'});pjm.innerHTML=html;pj.classList.add('on');pj.setAttribute('aria-hidden','false');document.body.classList.add('so');}
+      function closeProject(){pj.classList.remove('on');pj.setAttribute('aria-hidden','true');document.body.classList.remove('so');}
+      $('#pc').onclick=closeProject;$('#pj').onclick=function(e){if(e.target===this)closeProject();};
+      document.addEventListener('keydown',function(e){if(pj.classList.contains('on')&&e.key==='Escape')closeProject();if(pj.classList.contains('on')&&e.key==='ArrowRight')openProject((cur+1)%items.length);if(pj.classList.contains('on')&&e.key==='ArrowLeft')openProject((cur-1+items.length)%items.length);});
+      $('#pp').onclick=function(){openProject((cur-1+items.length)%items.length)};$('#pn').onclick=function(){openProject((cur+1)%items.length)};
+      $$('button.row').forEach(function(btn,idx){btn.onclick=function(){openProject(idx)};});
+      var generated=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+      var glyphs=$('#gl');
+      generated.forEach(function(g){var b=document.createElement('button');b.type='button';b.textContent=g;b.onclick=function(){var t=$('#t');var s=t.selectionStart;var v=t.value;var out=v.slice(0,s)+g+v.slice(t.selectionEnd);t.value=out;var pos=s+1;t.focus();t.setSelectionRange(pos,pos);};glyphs.appendChild(b);});
+      var mt=$('#mt');
+      var words=['Type', 'Systems', 'Grid', 'Information', 'Structure', 'Brand', 'Signal'];
+      mt.innerHTML=words.concat(words).map(function(w){return '<span>'+w+'</span>'}).join('');
+      var sample=$('#t');sample.value='The triangle is the strongest shape; each side relies on the other.';sample.style.height='auto';sample.style.height=sample.scrollHeight+'px';
+      sample.addEventListener('input',function(){this.style.height='auto';this.style.height=this.scrollHeight+'px';});
+      var segs={pre:$('#pre'),tf:$('#tf'),wt:$('#wt'),al:$('#al'),cs:$('#cs')};
+      function allTrue(){return true}
+      var state={font:'BER11N',weight:700,align:'left',case:'none'};
+      var textarea=$('#t'),size=$('#s'),tracking=$('#k'),leading=$('#l'),sv=$('#sv'),kv=$('#kv'),lv=$('#lv');
+      function sync(){
+        var v=textarea.value;
+        var font=state.font==='BER11N'?'BER11N':'Sustain';
+        textarea.style.fontFamily=font+', "Helvetica Neue", Helvetica, Arial, sans-serif';
+        textarea.style.fontWeight=String(state.weight);
+        textarea.style.textAlign=state.align;
+        textarea.style.textTransform=state.case==='uppercase'?'uppercase':state.case==='lowercase'?'lowercase':'none';
+        textarea.style.fontSize=(Number(size.value))+'px';
+        textarea.style.letterSpacing=(Number(tracking.value))+'px';
+        textarea.style.lineHeight=(Number(leading.value)/100)+';';
+        sv.textContent=size.value+'px';kv.textContent=tracking.value+'px';lv.textContent=leading.value+'%';
+      }
+      size.oninput=sync;tracking.oninput=sync;leading.oninput=sync;textarea.oninput=sync;
+      $('#pre button').forEach(function(btn){btn.onclick=function(){textarea.value=btn.dataset.x;sync();}});
+      $('#tf button').forEach(function(btn){btn.onclick=function(){state.font=btn.textContent.trim();$('#tf button').forEach(function(b){b.setAttribute('aria-pressed',String(b===btn))});sync();}});
+      $('#wt button').forEach(function(btn){btn.onclick=function(){state.weight=Number(btn.dataset.w||700);$('#wt button').forEach(function(b){b.setAttribute('aria-pressed',String(b===btn))});sync();}});
+      $('#al button').forEach(function(btn){btn.onclick=function(){state.align=btn.dataset.a||'left';$('#al button').forEach(function(b){b.setAttribute('aria-pressed',String(b===btn))});sync();}});
+      $('#cs button').forEach(function(btn){btn.onclick=function(){state.case=btn.dataset.c||'none';$('#cs button').forEach(function(b){b.setAttribute('aria-pressed',String(b===btn))});sync();}});
+      sync();
+      var big=$('#bg'),sn=$('#sn'),sd=$('#sd'),sf=$('#sf');
+      var specs=[{name:'BER11N',desc:'A condensed, utilitarian typeface for design systems, signage, and visual communication.',font:'BER11N'},{name:'Sustain',desc:'A rounded, robust companion offering warmth and readability for practical editorial work.',font:'Sustain'}];
+      function renderSpec(i){var spec=specs[i];big.textContent='Aa';big.style.fontFamily=spec.font+', "Helvetica Neue", Helvetica, Arial, sans-serif';sn.textContent=spec.name;sd.textContent=spec.desc;sf.innerHTML='';specs.forEach(function(item,idx){var b=document.createElement('button');b.type='button';b.textContent=item.name;b.setAttribute('aria-pressed',String(idx===i));b.onclick=function(){renderSpec(idx)};sf.appendChild(b);});}
+      renderSpec(0);
+      var stage=$('#cmpS');var cx=50;function updateCompare(){stage.style.setProperty('--cx',cx+'%');$('#cmpR').style.clipPath='inset(0 0 0 '+cx+'%)';$('#cmpH')&&$('#cmpH').style.left=cx+'%';var h=$('.cmp-h',stage);if(h)h.style.left=cx+'%';}
+      stage.addEventListener('pointerdown',function(e){function move(ev){var rect=stage.getBoundingClientRect();cx=Math.min(100,Math.max(0,((ev.clientX-rect.left)/rect.width)*100));updateCompare();} function up(){window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',up);} window.addEventListener('pointermove',move);window.addEventListener('pointerup',up);});
+      updateCompare();
+      $('#cp').onclick=function(){navigator.clipboard&&navigator.clipboard.writeText('zwne000@proton.me');};
+      if(!window.matchMedia('(hover:hover)').matches){
+        document.body.classList.add('touch');
+      }
+    })();
+  </script>
+</body>
 </html>
